@@ -1,38 +1,52 @@
-'use client'
+"use client"
 
-import Header from '@/components/header'
-import {Auth } from '@supabase/auth-ui-react'
-import { useUser } from '@supabase/auth-helpers-react'
-import supabase from '@/utils/supabase-browser'
+import Header from "@/components/header"
+import { Auth, ThemeSupa } from "@supabase/auth-ui-react"
+import supabase from "@/utils/supabase-browser"
+import useUser from "@/utils/use-user"
 
-export default function LoginPage () {
+export default function LoginPage() {
   const user = useUser()
 
   let body = null
-  if (!user) {
+  if (user === "loading") {
+    body = <p>Loading...</p>
+  } else if (user === null) {
     body = (
-      <Auth 
-      redirectTo="/"
-      socialLayout="horizontal"
-      supabaseClient={supabase}
+      <Auth
+        redirectTo="/"
+        socialLayout="horizontal"
+        supabaseClient={supabase}
+        appearance={{
+          theme: ThemeSupa,
+          variables: {
+            default: {
+              fonts: {
+                bodyFontFamily: "var(--font-jet-brains-mono)",
+                buttonFontFamily: "var(--font-jet-brains-mono)",
+                inputFontFamily: "var(--font-jet-brains-mono)",
+                labelFontFamily: "var(--font-jet-brains-mono)",
+              },
+            },
+          },
+        }}
       />
     )
   } else {
     body = (
       <>
-      <button onClick={() => supabase.auth.signOut()}>Sign out</button>
-      <p>User: </p>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
+        <button onClick={() => supabase.auth.signOut()}>Sign out</button>
+        <p>User: </p>
       </>
     )
   }
 
   return (
     <>
-    <Header />
-    <main>
-      {body}
-    </main>
-</>
+      <Header loggedIn={!!user} />
+      <main>
+        <div className="max-w-sm mx-auto">{body}</div>
+      </main>
+    </>
   )
 }
