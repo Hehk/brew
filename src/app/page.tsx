@@ -1,22 +1,17 @@
 import "server-only"
 
 import Header from "@/components/header"
-import createClient from "@/utils/supabase-server"
+import getSession from "@/utils/get-session"
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
 export default async function Page() {
-  const supabase = createClient()
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const session = await getSession()
+  const loggedIn = !!session
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/user/auth",
-        permanent: false,
-      },
-    }
+  // TODO - figure out some kind of hero page
+  if (!loggedIn) {
+    redirect("/auth")
   }
 
   const buttonCls =
@@ -24,7 +19,7 @@ export default async function Page() {
 
   return (
     <>
-      <Header loggedIn={!!session} />
+      <Header loggedIn={loggedIn} />
       <main className="container mx-auto px-4">
         <section className="mb-8 md:mb-16">
           <h2 className="font-mono text-2xl mb-4">Log</h2>

@@ -8,6 +8,7 @@ const useUser = () => {
 
   useEffect(() => {
     supabase.auth.getUser().then((res) => {
+      console.log(res)
       const {
         data: { user },
         error,
@@ -17,6 +18,8 @@ const useUser = () => {
       }
       if (user) {
         setUser(user)
+      } else {
+        setUser(null)
       }
     })
   }, [])
