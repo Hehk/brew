@@ -3,13 +3,13 @@ import "server-only"
 import Header from "@/components/header"
 import { getSession } from "@/utils/supabase-server"
 import Link from "next/link"
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation"
 
 export default async function Page() {
   const session = await getSession()
 
   if (!session) {
-    redirect('/user/auth')
+    redirect("/user/auth")
   }
 
   const buttonCls =
