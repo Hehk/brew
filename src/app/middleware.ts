@@ -4,7 +4,6 @@ import type { NextRequest } from "next/server"
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next()
-  console.log(res)
 
   const supabase = createMiddlewareSupabaseClient({ req, res })
 
@@ -12,7 +11,6 @@ export async function middleware(req: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
-  console.log(res, session)
   return res
 }
 

@@ -3,10 +3,16 @@ import "server-only"
 import "./globals.css"
 import SupabaseListener from "@/components/supabase-listener"
 import createClient from "@/utils/supabase-server"
-import { JetBrains_Mono } from "@next/font/google"
-const jetBrains = JetBrains_Mono({
+import { Cormorant_Upright, Inter } from "@next/font/google"
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+const cormorant = Cormorant_Upright({
   subsets: ["latin"],
-  variable: "--font-jet-brains-mono",
+  weight: ['400', '700'],
+  variable: "--font-cormorant",
   display: "optional",
 })
 
@@ -22,7 +28,7 @@ export default async function RootLayout({
   } = await supabase.auth.getSession()
 
   return (
-    <html lang="en" className={jetBrains.variable}>
+    <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import H1 from "@/components/h1"
 
 export default function Header({ loggedIn }: { loggedIn: boolean }) {
   let link = (
@@ -22,11 +23,11 @@ export default function Header({ loggedIn }: { loggedIn: boolean }) {
 
   return (
     <header className="container mx-auto flex justify-between pt-8 mb-8 md:mb-16 items-baseline px-4">
-      <h1 className="font-mono text-3xl">
-        <Link href="/">Brew</Link>
-      </h1>
+      <H1>
+        <Link  href="/">Brew</Link>
+      </H1>
 
-      <nav className="font-mono">{link}</nav>
+      <nav className="font-sans">{link}</nav>
     </header>
   )
 }
